@@ -4,7 +4,6 @@ import { useState } from "react"
 import {
   AlertCircleIcon,
   BarChart3Icon,
-  FolderKanbanIcon,
   LayersIcon,
   LayoutDashboardIcon,
   MoonIcon,
@@ -50,6 +49,7 @@ import { ActivityFormDialog } from "./activity-form-dialog"
 import { ConsolidatedMetricsCards } from "./consolidated-metrics-cards"
 import { EvmComparisonChart } from "./evm-comparison-chart"
 import { ProjectFormDialog } from "./project-form-dialog"
+import { TrycoreLogo } from "./trycore-logo"
 
 export function EvmDashboard() {
   const {
@@ -116,14 +116,13 @@ export function EvmDashboard() {
     <div className="bg-muted/20 min-h-svh">
       <header className="bg-background/85 sticky top-0 z-30 border-b backdrop-blur-md">
         <div className="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-4 px-6 py-4">
-          <div className="flex items-center gap-3.5">
-            <div className="bg-primary text-primary-foreground flex size-10 items-center justify-center rounded-xl shadow-xs">
-              <FolderKanbanIcon className="size-5" />
-            </div>
+          <div className="flex items-center gap-4">
+            <TrycoreLogo className="h-9 w-auto shrink-0" />
+            <Separator orientation="vertical" className="hidden h-8 sm:block" />
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-lg font-bold tracking-tight">
-                  Trycore EVM Tracker
+                <h1 className="text-base font-bold tracking-tight sm:text-lg">
+                  EVM Tracker
                 </h1>
                 <Badge variant="secondary" className="text-[11px]">
                   PMI Standard
@@ -371,13 +370,9 @@ export function EvmDashboard() {
 
                 <ConsolidatedMetricsCards project={selectedProject} />
 
-                <Tabs defaultValue="all" className="w-full">
+                <Tabs defaultValue="table" className="w-full min-w-0">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <TabsList>
-                      <TabsTrigger value="all">
-                        <LayoutDashboardIcon className="size-4" />
-                        Vista Completa
-                      </TabsTrigger>
                       <TabsTrigger value="table">
                         <TableIcon className="size-4" />
                         Tabla de Actividades ({selectedProject.activities.length})
@@ -389,20 +384,7 @@ export function EvmDashboard() {
                     </TabsList>
                   </div>
 
-                  <TabsContent value="all" className="mt-3 grid gap-6">
-                    <ActivitiesTable
-                      activities={selectedProject.activities}
-                      isSubmitting={isSubmitting}
-                      onAddActivity={handleOpenNewActivity}
-                      onEditActivity={handleOpenEditActivity}
-                      onDeleteActivity={(id) => void handleDeleteActivity(id)}
-                    />
-                    <EvmComparisonChart
-                      activities={selectedProject.activities}
-                    />
-                  </TabsContent>
-
-                  <TabsContent value="table" className="mt-3">
+                  <TabsContent value="table" className="mt-3 min-w-0">
                     <ActivitiesTable
                       activities={selectedProject.activities}
                       isSubmitting={isSubmitting}
@@ -412,7 +394,7 @@ export function EvmDashboard() {
                     />
                   </TabsContent>
 
-                  <TabsContent value="chart" className="mt-3">
+                  <TabsContent value="chart" className="mt-3 min-w-0">
                     <EvmComparisonChart
                       activities={selectedProject.activities}
                     />
