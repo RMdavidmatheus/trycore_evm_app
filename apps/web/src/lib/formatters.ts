@@ -23,13 +23,16 @@ export function formatPercentage(value: number): string {
 
 export function formatThousandsInput(raw: string): string {
   if (!raw) return ""
-  const clean = raw.replace(/[^\d.,]/g, "").replace(",", ".")
-  const parts = clean.split(".")
-  const intPart = parts[0] ? parts[0].replace(/^0+(?=\d)/, "") : ""
-  const formattedInt = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+  const withoutThousandDots = raw.replace(/\./g, "")
+  const clean = withoutThousandDots.replace(/[^\d,]/g, "")
+  if (!clean) return ""
+
+  const parts = clean.split(",")
+  const intDigits = parts[0] ? parts[0].replace(/^0+(?=\d)/, "") : ""
+  const formattedInt = intDigits.replace(/\B(?=(\d{3})+(?!\d))/g, ".")
 
   if (parts.length > 1) {
-    const decPart = parts[1]?.slice(0, 2) ?? ""
+    const decPart = parts.slice(1).join("").slice(0, 2)
     return `${formattedInt || "0"},${decPart}`
   }
   return formattedInt
