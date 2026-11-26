@@ -178,9 +178,9 @@ export function EvmDashboard() {
           </Alert>
         )}
 
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[310px_1fr]">
-          <aside className="flex flex-col gap-3">
-            <Card className="py-4">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[310px_minmax(0,1fr)]">
+          <aside className="flex min-w-0 flex-col gap-3">
+            <Card className="min-w-0 overflow-hidden py-4">
               <CardHeader className="px-4 pb-2">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
@@ -196,7 +196,7 @@ export function EvmDashboard() {
                 </CardDescription>
               </CardHeader>
 
-              <CardContent className="grid gap-2.5 px-4 pt-2">
+              <CardContent className="grid min-w-0 gap-2.5 px-4 pt-2">
                 {isLoading && projects.length === 0 ? (
                   <div className="grid gap-2.5">
                     <Skeleton className="h-24 w-full" />
@@ -231,18 +231,24 @@ export function EvmDashboard() {
                       <div
                         key={project.id}
                         onClick={() => setSelectedProjectId(project.id)}
-                        className={`group cursor-pointer rounded-xl border p-3.5 transition-all ${isSelected
+                        className={`group min-w-0 overflow-hidden cursor-pointer rounded-xl border p-3.5 transition-all ${isSelected
                             ? "border-primary bg-primary/5 shadow-xs"
                             : "bg-card hover:border-primary/40 hover:bg-muted/40"
                           }`}
                       >
-                        <div className="flex items-start justify-between gap-2">
-                          <div className="min-w-0">
-                            <p className="truncate text-sm font-semibold">
+                        <div className="flex min-w-0 items-start justify-between gap-2">
+                          <div className="min-w-0 flex-1">
+                            <p
+                              className="truncate text-sm font-semibold"
+                              title={project.name}
+                            >
                               {project.name}
                             </p>
                             {project.description && (
-                              <p className="text-muted-foreground mt-0.5 line-clamp-1 text-xs">
+                              <p
+                                className="text-muted-foreground mt-0.5 truncate text-xs"
+                                title={project.description}
+                              >
                                 {project.description}
                               </p>
                             )}
@@ -254,9 +260,11 @@ export function EvmDashboard() {
 
                         <Separator className="my-2.5" />
 
-                        <div className="flex items-center justify-between text-xs">
-                          <span className="text-muted-foreground">BAC:</span>
-                          <span className="font-mono font-semibold">
+                        <div className="flex min-w-0 items-center justify-between gap-2 text-xs">
+                          <span className="text-muted-foreground shrink-0">
+                            BAC:
+                          </span>
+                          <span className="truncate font-mono font-semibold">
                             {formatCurrency(project.totalPlannedBudget)}
                           </span>
                         </div>
@@ -310,22 +318,22 @@ export function EvmDashboard() {
               </Card>
             ) : (
               <>
-                <Card className="py-5">
+                <Card className="min-w-0 overflow-hidden py-5">
                   <CardHeader>
                     <div className="flex flex-wrap items-start justify-between gap-4">
-                      <div className="space-y-1">
+                      <div className="min-w-0 flex-1 space-y-1">
                         <div className="flex flex-wrap items-center gap-2.5">
-                          <CardTitle className="text-xl font-bold">
+                          <CardTitle className="break-words text-xl font-bold">
                             {selectedProject.name}
                           </CardTitle>
-                          <Badge variant="outline">
+                          <Badge variant="outline" className="shrink-0">
                             {selectedProject.activities.length}{" "}
                             {selectedProject.activities.length === 1
                               ? "actividad registrada"
                               : "actividades registradas"}
                           </Badge>
                         </div>
-                        <CardDescription>
+                        <CardDescription className="break-words">
                           {selectedProject.description ||
                             "Proyecto activo bajo seguimiento de metodología de Valor Ganado (EVM)."}
                         </CardDescription>
