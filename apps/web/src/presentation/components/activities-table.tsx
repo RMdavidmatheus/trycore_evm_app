@@ -45,7 +45,7 @@ export function ActivitiesTable({
   onDeleteActivity,
 }: ActivitiesTableProps) {
   return (
-    <Card>
+    <Card className="min-w-0 overflow-hidden">
       <CardHeader className="border-b pb-4">
         <div>
           <CardTitle className="text-base">
@@ -64,7 +64,7 @@ export function ActivitiesTable({
         </CardAction>
       </CardHeader>
 
-      <CardContent className="pt-2">
+      <CardContent className="min-w-0 pt-2">
         {activities.length === 0 ? (
           <div className="text-muted-foreground flex flex-col items-center justify-center rounded-xl border border-dashed py-12 text-center text-sm">
             <p className="font-medium text-foreground">
